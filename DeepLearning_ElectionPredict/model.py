@@ -17,7 +17,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 
 
 class ElectionModel():
-    def __init__(self, TrainingDataLocation = "data/train_potus_by_county.csv"):
+    def __init__(self, TrainingDataLocation = "data/train.csv"):
         self.training_data = pd.read_csv(TrainingDataLocation)
         self.feature_data = self.training_data[self.training_data.columns[0:14]]
         self.label_data_names = self.training_data[self.training_data.columns[14]]
