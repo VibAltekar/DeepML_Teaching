@@ -21,5 +21,3 @@ model.fit(training_data, target_data, epochs=500, verbose=0)
 model.evaluate(training_data,target_data)
 
 print(model.predict(training_data).round())
-
-#print(model.predict(np.array([[1,1]])))
