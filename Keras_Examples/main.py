@@ -18,9 +18,10 @@ numpy.random.seed(7)
 def load_dataset(datasource: str) -> (numpy.ndarray, MinMaxScaler):
     # load the dataset
     dataframe = pandas.read_csv(datasource, usecols=[1])
+    print(dataframe.head())
     dataframe = dataframe.fillna(method='pad')
     dataset = dataframe.values
-    dataset = dataset.astype('float32')
+    dataset = dataset.astype('float64')
 
     plt.plot(dataset)
     plt.show()
@@ -95,7 +96,7 @@ def make_forecast(model: Sequential, look_back_buffer: numpy.ndarray, timesteps:
 
 
 def main():
-    datasource = 'international-airline-passengers.csv'
+    datasource = "data/aapl.csv"
     dataset, scaler = load_dataset(datasource)
 
     # split into train and test sets
@@ -114,7 +115,7 @@ def main():
     # create and fit Multilayer Perceptron model
     batch_size = 1
     model = build_model(look_back, batch_size=batch_size)
-    for _ in trange(100, desc='fitting model\t', mininterval=1.0):
+    for _ in trange(1, desc='fitting model\t', mininterval=1.0):
         model.fit(train_x, train_y, nb_epoch=1, batch_size=batch_size, verbose=0, shuffle=False)
         model.reset_states()
 
@@ -126,7 +127,11 @@ def main():
     forecast_predict = make_forecast(model, test_x[-1::], timesteps=100, batch_size=batch_size)
 
     # invert dataset and predictions
+    print(dataset)
+    numpy.nan_to_num(dataset)
     dataset = scaler.inverse_transform(dataset)
+    numpy.nan_to_num(train_predict)
+    numpy.nan_to_num(test_predict)
     train_predict = scaler.inverse_transform(train_predict)
     train_y = scaler.inverse_transform([train_y])
     test_predict = scaler.inverse_transform(test_predict)
