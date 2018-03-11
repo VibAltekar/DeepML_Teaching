@@ -9,7 +9,7 @@ class Net(nn.Module):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(2, 5, True)
         self.fc2 = nn.Linear(5, 1, True)
-	self.relu = nn.ReLU()
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         x = F.sigmoid(self.fc1(x))

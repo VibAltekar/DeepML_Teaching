@@ -16,8 +16,10 @@ model.compile(loss='mean_squared_error',
               optimizer='adam',
               metrics=['binary_accuracy'])
 
-model.fit(training_data, target_data, epochs=500, verbose=0)
+h = model.fit(training_data, target_data, epochs=500, verbose=1)
 
 model.evaluate(training_data,target_data)
 
+print(h.history.keys())
+print("Min Loss: ",h.history["loss"][-1])
 print(model.predict(training_data).round())
