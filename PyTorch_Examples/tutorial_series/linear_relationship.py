@@ -3,13 +3,9 @@ import matplotlib.pyplot as plt
 x_data = [1.0, 2.0, 3.0]
 y_data = [2.0, 4.0, 6.0]
 
-w = 1.0  # a random guess: random value, 1.0
-
-# our model for the forward pass
+w = 1.0
 def forward(x):
    return x * w
-
-# Loss function
 def loss(x, y):
    y_pred = forward(x)
    return (y_pred - y) * (y_pred - y)
@@ -32,4 +28,3 @@ plt.plot(w_list, mse_list)
 plt.ylabel('Loss')
 plt.xlabel('w')
 plt.show()
-
