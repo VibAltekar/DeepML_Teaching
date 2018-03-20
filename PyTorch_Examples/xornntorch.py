@@ -15,25 +15,27 @@ class Net(nn.Module):
         x = F.sigmoid(self.fc1(x))
         x = self.fc2(x)
         return x
-class net_run():
-    def __init__(self):
+class Net_run():
+    def __init__(self,model_arch,inputs=None,targets=None):
         self.net = Net()
-        self.inputs = list(map(lambda s: Variable(torch.Tensor([s])), [
-            [0, 0],
-            [0, 1],
-            [1, 0],
-            [1, 1]
-        ]))
-        self.targets = list(map(lambda s: Variable(torch.Tensor([s])), [
-            [0],
-            [1],
-            [1],
-            [0]
-        ]))
+        if inputs==None:
+            self.inputs = list(map(lambda s: Variable(torch.Tensor([s])), [
+                [0, 0],
+                [0, 1],
+                [1, 0],
+                [1, 1]
+            ]))
+        if targets == None:
+            self.targets = list(map(lambda s: Variable(torch.Tensor([s])), [
+                [0],
+                [1],
+                [1],
+                [0]
+            ]))
         self.criterion = nn.MSELoss()
         self.optimizer = optim.SGD(self.net.parameters(), lr=0.001)
-    def run(self):
-        for i in range(0, 10000):
+    def train(self,criterion=None,optimizer=None):
+        for i in range(0, 10):
             for input, target in zip(self.inputs, self.targets):
                 self.optimizer.zero_grad()   
                 output = self.net(input)
@@ -43,6 +45,7 @@ class net_run():
                 if i % 500 == 0:
                     print(loss)
         print("Training Complete")
+    def test(self):
         for input, target in zip(self.inputs, self.targets):
             output = self.net(input)
             print("Input:[{},{}] Target:[{}] Predicted:[{}] Error:[{}]".format(
@@ -54,5 +57,7 @@ class net_run():
             ))
 
 if __name__ == "__main__":
-    n = net_run()
-    n.run()
+    net = Net()
+    n = Net_run(net)
+    n.train()
+    n.test()
