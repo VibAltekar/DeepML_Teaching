@@ -31,7 +31,7 @@ class Net_run():
                 [1],
                 [1],
                 [0]
-            ]))
+            ])) 
         self.criterion = nn.MSELoss()
         self.optimizer = optim.SGD(self.net.parameters(), lr=0.001)
     def train(self,criterion=None,optimizer=None):
@@ -42,9 +42,7 @@ class Net_run():
                 loss = self.criterion(output, target)
                 loss.backward()
                 self.optimizer.step()  
-                if i % 500 == 0:
-                    print(loss)
-        print("Training Complete")
+            print("Loss: {}".format(loss.data[0]))
     def test(self):
         for input, target in zip(self.inputs, self.targets):
             output = self.net(input)
